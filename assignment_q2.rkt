@@ -12,6 +12,15 @@
 ;You may delete these comments!
 
 (provide ins_beg)
-
+(provide ins_end)
+(provide cout_top_level)
 (define (ins_beg el lst)
-  (display "Hello, I'm ins_beg!\n"))
+  (cons el (cons lst empty)))
+
+(define (ins_end el lst)
+  (cons lst (cons el empty)))
+
+(define (cout_top_level lst)
+  (if(null? lst)
+     0
+     (+ 1 (cout_top_level(cdr lst)))))
