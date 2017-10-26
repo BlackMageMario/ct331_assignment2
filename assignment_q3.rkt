@@ -75,8 +75,8 @@
 (define (ascending_on_last_sort tree lowest_value)
   (cond
     [(empty? tree) lowest_value]
-    [(< (get_last_digit(cadr tree)) (get_last_digit lowest_value))(list (ascending_sort (car tree) (cadr tree))(ascending_sort (caddr tree) lowest_value))]
-    [(> (get_last_digit(cadr tree)) (get_last_digit lowest_value))(list (ascending_sort (car tree) lowest_value)(ascending_sort (caddr tree) (cadr tree)))]
+    [(< (get_last_digit(cadr tree)) (get_last_digit lowest_value))(list (ascending_on_last_sort (car tree) (cadr tree))(ascending_on_last_sort (caddr tree) lowest_value))]
+    [(> (get_last_digit(cadr tree)) (get_last_digit lowest_value))(list (ascending_on_last_sort (car tree) lowest_value)(ascending_on_last_sort (caddr tree) (cadr tree)))]
     )
   )
 
