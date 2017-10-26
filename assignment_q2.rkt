@@ -64,6 +64,6 @@
              (count_instances_deep (cdr lst) item (+ 1 out))]
     [(list? (car lst))
      (+ (count_instances_deep (car lst) item 0) (count_instances_deep (cdr lst) item out))]
-    [else ((count_instances_deep (cdr lst) item out))]
+    [else (count_instances_deep (cdr lst) item out)]
     )
   )

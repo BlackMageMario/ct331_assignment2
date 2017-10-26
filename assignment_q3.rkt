@@ -5,10 +5,9 @@
 
 (define (binary_tree_node left_node value right_node)
   (list left_node value right_node))
-;one more lab to go
 (define (traverse tree)
   (cond
-    [(empty? tree)]
+    [(empty? tree) #t]
     [else
      (begin
          (traverse (car tree))
@@ -36,14 +35,13 @@
   )
 (define (search_tree tree value)
   (cond
-    [(empty? tree) #f]
-    [(= value (cadr tree))]
-    [else(search_tree (car tree ) value)(search_tree (caddr tree) value)]
+    [(null? tree) #f]
+    [(equal? value (cadr tree))]
+    [(> (cadr tree) value)(search_tree (car tree) value)]
+    [(< (cadr tree) value)(search_tree (caddr tree) value)]
     )
   )
 (define (insert_tree tree value)
-  (display tree)
-  (display "\n")
   (cond
     [(empty? tree)(binary_tree_leaf value)]
     [(= (cadr tree) value) #t]
@@ -58,33 +56,29 @@
    )
 )
 ;
-(define (ascending_sort tree lowest_value)
+(define (ascending_sort list)
+  (traverse(insert_list_tree '() list))
+)
+(define (insert_descend_tree tree value)
   (cond
-    [(empty? tree) lowest_value]
-    [(< (cadr tree) lowest_value)(list (ascending_sort (car tree) (cadr tree))(ascending_sort (caddr tree) lowest_value))]
-    [(> (cadr tree) lowest_value)(list (ascending_sort (car tree) lowest_value)(ascending_sort (caddr tree) (cadr tree)))]
+    [(empty? tree)(binary_tree_leaf value)]
+    [(= (cadr tree) value) #t]
+    [(< (cadr tree) value)(list (insert_descend_tree (caddr tree) value) (cadr tree) (car tree))]
+    [(> (cadr tree) value)(list (caddr tree) (cadr tree) (insert_descend_tree (car tree) value) )]        
   )
 )
-(define (descending_sort tree highest_value)
+(define (insert_list_descend_tree tree list)
   (cond
-    [(empty? tree) highest_value]
-    [(< (cadr tree) highest_value)(list (descending_sort (caddr tree) highest_value)(descending_sort (car tree) (cadr tree)))]
-    [(> (cadr tree) highest_value)(list (descending_sort (caddr tree) (cadr tree))(descending_sort (car tree) highest_value))]
+    [(empty? list) tree]
+    [else (insert_list_descend_tree (insert_descend_tree tree (car list)) (cdr list))]
    )
- )
-(define (ascending_on_last_sort tree lowest_value)
-  (cond
-    [(empty? tree) lowest_value]
-    [(< (get_last_digit(cadr tree)) (get_last_digit lowest_value))(list (ascending_on_last_sort (car tree) (cadr tree))(ascending_on_last_sort (caddr tree) lowest_value))]
-    [(> (get_last_digit(cadr tree)) (get_last_digit lowest_value))(list (ascending_on_last_sort (car tree) lowest_value)(ascending_on_last_sort (caddr tree) (cadr tree)))]
-    )
+)
+(define (descending_sort list)
+  (traverse(insert_list_descend_tree '() list))
   )
 
-(define (get_last_digit num)
-  (modulo num 10))
-
-(define (sort_tree tree fun)
-  (fun(tree 0)))
+(define (sort_tree func list)
+  (func list))
 
 (define test_list
-  (list 14 28 7))
+  (list 3 6 1 7))
