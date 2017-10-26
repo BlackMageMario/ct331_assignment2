@@ -42,9 +42,11 @@
     )
   )
 (define (insert_tree tree value)
+  (display tree)
+  (display "\n")
   (cond
     [(empty? tree)(binary_tree_leaf value)]
-    [(= (cadr tree) value) #t]
+    [(= (cadr tree) value) tree]
     [(> (cadr tree) value)(list (insert_tree (car tree) value) (cadr tree) (caddr tree))]
     [(< (cadr tree) value)(list (car tree) (cadr tree) (insert_tree (caddr tree) value) )]        
   )
@@ -62,7 +64,7 @@
 (define (insert_descend_tree tree value)
   (cond
     [(empty? tree)(binary_tree_leaf value)]
-    [(= (cadr tree) value) #t]
+    [(= (cadr tree) value) tree]
     [(< (cadr tree) value)(list (insert_descend_tree (caddr tree) value) (cadr tree) (car tree))]
     [(> (cadr tree) value)(list (caddr tree) (cadr tree) (insert_descend_tree (car tree) value) )]        
   )
