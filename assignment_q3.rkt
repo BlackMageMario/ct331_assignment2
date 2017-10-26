@@ -68,9 +68,23 @@
 (define (descending_sort tree highest_value)
   (cond
     [(empty? tree) highest_value]
-    [(< (cadr tree) highest_value)(list (descending_sort (car tree) highest_value)(descending_sort (caddr tree) (cadr tree)))]
-    [(> (cadr tree) highest_value)(list (descending_sort (car tree) (cadr tree))(descending_sort (caddr tree) highest_value))]
+    [(< (cadr tree) highest_value)(list (descending_sort (caddr tree) highest_value)(descending_sort (car tree) (cadr tree)))]
+    [(> (cadr tree) highest_value)(list (descending_sort (caddr tree) (cadr tree))(descending_sort (car tree) highest_value))]
    )
  )
+(define (ascending_on_last_sort tree lowest_value)
+  (cond
+    [(empty? tree) lowest_value]
+    [(< (get_last_digit(cadr tree)) (get_last_digit lowest_value))(list (ascending_sort (car tree) (cadr tree))(ascending_sort (caddr tree) lowest_value))]
+    [(> (get_last_digit(cadr tree)) (get_last_digit lowest_value))(list (ascending_sort (car tree) lowest_value)(ascending_sort (caddr tree) (cadr tree)))]
+    )
+  )
+
+(define (get_last_digit num)
+  (modulo num 10))
+
+(define (sort_tree tree fun)
+  (fun(tree 0)))
+
 (define test_list
   (list 14 28 7))
